@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import Movie from "./Movie";
-import tempMovieData from "../../data/tempMovieData";
-function MovieBox() {
+
+function MovieBox({ movies }) {
   const [isOpen1, setIsOpen1] = useState(true);
-  const [movies, setMovies] = useState(tempMovieData);
+
   return (
     <div className="w-96 bg-gray-800 rounded-lg shadow-lg overflow-hidden relative">
       <button
