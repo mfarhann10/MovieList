@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import Movie from "./Movie";
 
-function MovieBox({ movies }) {
+function MovieBox({ children }) {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -13,7 +12,7 @@ function MovieBox({ movies }) {
       >
         {isOpen1 ? "–" : "+"}
       </button>
-      {isOpen1 && <Movie movies={movies} />}
+      {isOpen1 && children}
     </div>
   );
 }
