@@ -1,6 +1,6 @@
 function NumResults() {
   return (
-    <p className="num-results">
+    <p className="text-lg font-medium text-gray-200">
       Found <strong>X</strong> results
     </p>
   );

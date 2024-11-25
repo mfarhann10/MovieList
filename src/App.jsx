@@ -1,10 +1,9 @@
 import Main from "./components/Main";
 import NavBar from "./components/NavBar";
 
-/* eslint-disable react/prop-types */
 function App() {
   return (
-    <div>
+    <div className="min-h-screen bg-gray-900 text-gray-200 p-6">
       <NavBar />
       <Main />
     </div>

@@ -3,7 +3,7 @@ function Search() {
   const [query, setQuery] = useState("");
   return (
     <input
-      className="search"
+      className="w-80 px-4 py-2 text-gray-200 placeholder-gray-400 bg-indigo-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-sm transition-all"
       type="text"
       placeholder="Search movies..."
       value={query}
