@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import Star from "./Start";
+import PropTypes from "prop-types";
 
 const containerStyle = {
   display: "flex",
@@ -10,6 +10,16 @@ const containerStyle = {
 
 const starContainerStle = {
   display: "flex",
+};
+
+StarRating.propTypes = {
+  maxRating: PropTypes.number.isRequired,
+  color: PropTypes.string,
+  size: PropTypes.number,
+  messages: PropTypes.array,
+  className: PropTypes.string,
+  defaultRating: PropTypes.number,
+  onSetRating: PropTypes.func,
 };
 
 function StarRating({

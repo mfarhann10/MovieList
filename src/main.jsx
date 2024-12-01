@@ -22,7 +22,7 @@ createRoot(document.getElementById("root")).render(
       messages={["Terrible", "Bad", "Good", "Wow", "Amazing"]}
       className="Test"
     />
-    <StarRating color="red" size={24} defaultRating={3} />
+    <StarRating color="red" size={24} defaultRating={3} maxRating={5} />
     <Test />
   </StrictMode>
 );
