@@ -7,8 +7,6 @@ import "./index.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <StarRating maxRating={10} />
     <StarRating maxRating={5} />
-    <StarRating />
   </StrictMode>
 );
