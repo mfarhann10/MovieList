@@ -13,6 +13,12 @@ import WatchedSummary from "./components/Watched/WatchedSummary";
 function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
+
+  const KEY = import.meta.env.VITE_APP_KEY;
+
+  fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
+    .then((res) => res.json())
+    .then((data) => console.log(data));
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 p-6">
       <NavBar>
