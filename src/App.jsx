@@ -10,24 +10,40 @@ import Box from "./components/Box";
 import Watched from "./components/Watched/Watched";
 import WatchedSummary from "./components/Watched/WatchedSummary";
 import Loader from "./API/Loader";
+import Error from "./API/Error";
+import ErrorMessage from "./API/Error";
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const KEY = import.meta.env.VITE_APP_KEY;
-  const query = "interstellar";
+  const query = "ssdfdfef";
 
   useEffect(() => {
     async function fetchMovie() {
-      setIsLoading(true);
-      const res = await fetch(
-        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
-      );
-      const data = await res.json();
-      setMovies(data.Search);
-      setIsLoading(false);
+      try {
+        setIsLoading(true);
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+        );
+
+        if (!res.ok) throw new Error("Error fetching the data");
+
+        const data = await res.json();
+
+        if (data.Response === "False") throw new Error("Movie not found !");
+
+        setMovies(data.Search);
+        console.log(data);
+      } catch (err) {
+        console.error(err.message);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchMovie();
   }, []);
@@ -39,7 +55,12 @@ function App() {
       </NavBar>
 
       <Main>
-        <Box>{isLoading ? <Loader /> : <Movie movies={movies} />}</Box>
+        <Box>
+          {/* {isLoading ? <Loader /> : <Movie movies={movies} />} */}
+          {isLoading && <Loader />}
+          {!isLoading && !error && <Movie movies={movies} />}
+          {error && <ErrorMessage message={error} />}
+        </Box>
 
         <Box>
           <WatchedSummary watched={watched} />
