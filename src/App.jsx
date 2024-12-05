@@ -9,20 +9,25 @@ import Movie from "./components/Movie/Movie";
 import Box from "./components/Box";
 import Watched from "./components/Watched/Watched";
 import WatchedSummary from "./components/Watched/WatchedSummary";
+import Loader from "./API/Loader";
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const KEY = import.meta.env.VITE_APP_KEY;
   const query = "interstellar";
+
   useEffect(() => {
     async function fetchMovie() {
+      setIsLoading(true);
       const res = await fetch(
         `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
       );
       const data = await res.json();
       setMovies(data.Search);
+      setIsLoading(false);
     }
     fetchMovie();
   }, []);
@@ -34,9 +39,7 @@ function App() {
       </NavBar>
 
       <Main>
-        <Box>
-          <Movie movies={movies} />
-        </Box>
+        <Box>{isLoading ? <Loader /> : <Movie movies={movies} />}</Box>
 
         <Box>
           <WatchedSummary watched={watched} />
