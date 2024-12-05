@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Main from "./components/Main";
 import NavBar from "./components/NavBar/NavBar";
 import Search from "./components/NavBar/Search";
@@ -11,14 +11,21 @@ import Watched from "./components/Watched/Watched";
 import WatchedSummary from "./components/Watched/WatchedSummary";
 
 function App() {
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
 
   const KEY = import.meta.env.VITE_APP_KEY;
-
-  fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
-    .then((res) => res.json())
-    .then((data) => console.log(data));
+  const query = "interstellar";
+  useEffect(() => {
+    async function fetchMovie() {
+      const res = await fetch(
+        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+      );
+      const data = await res.json();
+      setMovies(data.Search);
+    }
+    fetchMovie();
+  }, []);
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 p-6">
       <NavBar>
