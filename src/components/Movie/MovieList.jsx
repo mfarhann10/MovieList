@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
 
-function MovieList({ movie }) {
+function MovieList({ movie, onSelectMovie }) {
   return (
-    <li className="p-4 flex items-start gap-4 hover:bg-gray-700 transition-all">
+    <li
+      className="p-4 flex items-start gap-4 hover:bg-gray-700 transition-all"
+      onClick={() => onSelectMovie(movie.imdbID)}
+    >
       <img
         src={movie.Poster}
         alt={`${movie.Title} poster`}

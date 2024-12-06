@@ -12,6 +12,7 @@ import WatchedSummary from "./components/Watched/WatchedSummary";
 import Loader from "./API/Loader";
 import Error from "./API/Error";
 import ErrorMessage from "./API/Error";
+import MovieDetails from "./components/Movie/MovieDetail";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -20,8 +21,15 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const KEY = useMemo(() => import.meta.env.VITE_APP_KEY, []);
-  const tempQuery = "interstellar";
+  const [selectedId, setSelectedId] = useState(null);
 
+  function HandleSelectMovie(id) {
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
+  }
+
+  function HandleCloseMovie() {
+    setSelectedId(null);
+  }
   useEffect(
     function () {
       async function fetchMovie() {
@@ -70,13 +78,24 @@ function App() {
         <Box>
           {/* {isLoading ? <Loader /> : <Movie movies={movies} />} */}
           {isLoading && <Loader />}
-          {!isLoading && !error && <Movie movies={movies} />}
+          {!isLoading && !error && (
+            <Movie movies={movies} onSelectMovie={HandleSelectMovie} />
+          )}
           {error && <ErrorMessage message={error} />}
         </Box>
 
         <Box>
-          <WatchedSummary watched={watched} />
-          <Watched watched={watched} />
+          {selectedId ? (
+            <MovieDetails
+              selectedId={selectedId}
+              onCloseMovie={HandleCloseMovie}
+            />
+          ) : (
+            <>
+              <WatchedSummary watched={watched} />
+              <Watched watched={watched} />
+            </>
+          )}
         </Box>
       </Main>
     </div>
