@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import StarRating from "../Star/StarRating";
 import Loader from "../../API/Loader";
 /* eslint-disable react/prop-types */
-function MovieDetails({ selectedId, onCloseMovie, KEY }) {
+function MovieDetails({ selectedId, onCloseMovie, KEY, onAddMovie }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -19,7 +19,18 @@ function MovieDetails({ selectedId, onCloseMovie, KEY }) {
     Genre: genre,
   } = movie;
 
-  console.log(title, year);
+  function HandleAd() {
+    const newWatchedMovie = {
+      imdbId: selectedId,
+      title,
+      year,
+      poster,
+      imdbRating: Number(imdbRating),
+      runtime: Number(runtime.split(" ").at(0)),
+    };
+    onAddMovie(newWatchedMovie);
+  }
+
   useEffect(
     function () {
       async function GetMovieDetail() {
@@ -77,6 +88,12 @@ function MovieDetails({ selectedId, onCloseMovie, KEY }) {
           {/* Details Section */}
           <section className="p-5">
             <StarRating maxRating={10} className="mb-3" size={24} />
+            <button
+              className="px-4 py-2 mb-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg shadow-md focus:outline-none "
+              onClick={HandleAd}
+            >
+              + Add to List
+            </button>
             <p className="italic text-gray-300 mb-6">{plot}</p>
             <p className="text-sm text-gray-400 mb-4">
               <strong>Starring:</strong> {actors}

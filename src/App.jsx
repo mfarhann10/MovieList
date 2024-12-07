@@ -3,8 +3,6 @@ import Main from "./components/Main";
 import NavBar from "./components/NavBar/NavBar";
 import Search from "./components/NavBar/Search";
 import NumResults from "./components/NavBar/NumResults";
-import tempMovieData from "./data/tempMovieData";
-import tempWatchedData from "./data/tempWatchedData";
 import Movie from "./components/Movie/Movie";
 import Box from "./components/Box";
 import Watched from "./components/Watched/Watched";
@@ -29,6 +27,10 @@ function App() {
 
   function HandleCloseMovie() {
     setSelectedId(null);
+  }
+
+  function handleAddMovie(movie) {
+    setWatched((watched) => [...watched, movie]);
   }
   useEffect(
     function () {
@@ -90,6 +92,7 @@ function App() {
               selectedId={selectedId}
               onCloseMovie={HandleCloseMovie}
               KEY={KEY}
+              onAddMovie={handleAddMovie}
             />
           ) : (
             <>

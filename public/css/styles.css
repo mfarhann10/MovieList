@@ -47,3 +47,15 @@ body {
   gap: 2.4rem;
   justify-content: center;
 }
+
+.btn-add {
+  background-color: #6741d9;
+  color: #dee2e6;
+  border: none;
+  border-radius: 10rem;
+  font-size: 1.4rem;
+  padding: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
