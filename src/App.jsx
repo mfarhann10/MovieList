@@ -89,6 +89,7 @@ function App() {
             <MovieDetails
               selectedId={selectedId}
               onCloseMovie={HandleCloseMovie}
+              KEY={KEY}
             />
           ) : (
             <>
