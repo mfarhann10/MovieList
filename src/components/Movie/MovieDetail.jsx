@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import StarRating from "../Star/StarRating";
 import Loader from "../../API/Loader";
 /* eslint-disable react/prop-types */
-function MovieDetails({ selectedId, onCloseMovie, KEY, onAddMovie }) {
+function MovieDetails({ selectedId, onCloseMovie, KEY, onAddMovie, watched }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
+
+  const isWatched = watched.map((movie) => movie.imdbId).includes(selectedId);
 
   const {
     Title: title,
@@ -42,7 +44,7 @@ function MovieDetails({ selectedId, onCloseMovie, KEY, onAddMovie }) {
           `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
         );
         const data = await res.json();
-        console.log(data);
+
         setMovie(data);
         setIsLoading(false);
       }
@@ -90,19 +92,29 @@ function MovieDetails({ selectedId, onCloseMovie, KEY, onAddMovie }) {
 
           {/* Details Section */}
           <section className="p-5">
-            <StarRating
-              maxRating={10}
-              className="mb-3"
-              size={24}
-              onSetRating={setUserRating}
-            />
-            {userRating > 0 && (
-              <button
-                className="px-4 py-2 mb-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg shadow-md focus:outline-none "
-                onClick={HandleAd}
-              >
-                + Add to List
-              </button>
+            {!isWatched ? (
+              <>
+                {" "}
+                <StarRating
+                  maxRating={10}
+                  className="mb-3"
+                  size={24}
+                  onSetRating={setUserRating}
+                />
+                {userRating > 0 && (
+                  <button
+                    className="px-4 py-2 mb-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg shadow-md focus:outline-none "
+                    onClick={HandleAd}
+                  >
+                    + Add to List
+                  </button>
+                )}
+              </>
+            ) : (
+              <p className="text-xl text-gray-300 mb-4">
+                {" "}
+                You are rated this movie
+              </p>
             )}
             <p className="italic text-gray-300 mb-6">{plot}</p>
             <p className="text-sm text-gray-400 mb-4">

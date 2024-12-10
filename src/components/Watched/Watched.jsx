@@ -4,7 +4,7 @@ function Watched({ watched }) {
   return (
     <ul className="divide-y divide-gray-700">
       {watched.map((movie) => (
-        <WatchedList key={movie.imdbID} movie={movie} />
+        <WatchedList key={movie.imdbId} movie={movie} />
       ))}
     </ul>
   );
