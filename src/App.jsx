@@ -32,6 +32,7 @@ function App() {
   function handleAddMovie(movie) {
     setWatched((watched) => [...watched, movie]);
   }
+
   useEffect(
     function () {
       async function fetchMovie() {

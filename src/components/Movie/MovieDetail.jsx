@@ -39,14 +39,20 @@ function MovieDetails({ selectedId, onCloseMovie, KEY, onAddMovie, watched }) {
   useEffect(
     function () {
       async function GetMovieDetail() {
-        setIsLoading(true);
-        const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
-        );
-        const data = await res.json();
+        try {
+          setIsLoading(true);
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
+          );
+          if (!res) throw new Error("Movie not Found!");
 
-        setMovie(data);
-        setIsLoading(false);
+          const data = await res.json();
+
+          setMovie(data);
+          setIsLoading(false);
+        } catch (err) {
+          console.error(err.message);
+        }
       }
       GetMovieDetail();
     },
