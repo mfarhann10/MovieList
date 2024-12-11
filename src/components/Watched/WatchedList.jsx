@@ -1,26 +1,33 @@
 /* eslint-disable react/prop-types */
-function WatchedList({ movie }) {
+function WatchedList({ movie, onDeleteMovie }) {
   return (
     <li className="p-4 flex items-start gap-4 hover:bg-gray-700 transition-all">
       <img
         src={movie.poster}
         alt={`${movie.title} poster`}
-        className="w-16 h-24 object-cover"
+        className="w-16 h-24 object-cover rounded-md shadow-sm"
       />
-      <div>
-        <h3 className="text-lg font-semibold">{movie.title}</h3>
-        <div className="mt-1 text-sm flex gap-4 text-gray-400">
+      <div className="flex-1">
+        <h3 className="text-lg font-semibold text-gray-100">{movie.title}</h3>
+        <div className="mt-1 text-sm text-gray-400 flex flex-wrap gap-4">
           <p>
-            <span>⭐️</span> {movie.imdbRating}
+            <span className="text-yellow-400">⭐️</span> {movie.imdbRating}
           </p>
           <p>
-            <span>🌟</span> {movie.userRating}
+            <span className="text-yellow-500">🌟</span> {movie.userRating}
           </p>
           <p>
-            <span>⏳</span> {movie.runtime} min
+            <span className="text-blue-400">⏳</span> {movie.runtime} min
           </p>
         </div>
       </div>
+      <button
+        className="bg-gray-700 hover:bg-gray-600 text-white p-2 rounded-full shadow-md transition-all"
+        onClick={() => onDeleteMovie(movie.imdbId)}
+        aria-label={`Delete ${movie.title}`}
+      >
+        ❌
+      </button>
     </li>
   );
 }
