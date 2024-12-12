@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 import StarRating from "../Star/StarRating";
 import Loader from "../../API/Loader";
 /* eslint-disable react/prop-types */
-function MovieDetails({ selectedId, onCloseMovie, KEY, onAddMovie, watched }) {
+function MovieDetails({
+  selectedId,
+  onCloseMovie,
+  KEY,
+  onAddMovie,
+  watched,
+  setError,
+}) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
@@ -49,16 +56,18 @@ function MovieDetails({ selectedId, onCloseMovie, KEY, onAddMovie, watched }) {
           if (!res) throw new Error("Movie not Found!");
 
           const data = await res.json();
+          if (data.Response === "False") throw new Error("Movie not found!");
 
           setMovie(data);
           setIsLoading(false);
         } catch (err) {
           console.error(err.message);
+          setError(err.message);
         }
       }
       GetMovieDetail();
     },
-    [selectedId, KEY]
+    [selectedId, KEY, setError]
   );
 
   //For Title Page
