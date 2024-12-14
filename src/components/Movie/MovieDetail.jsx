@@ -45,6 +45,25 @@ function MovieDetails({
     onCloseMovie();
   }
 
+  //escape in movie detail
+  useEffect(
+    function () {
+      function callback(e) {
+        if (e.code === "Escape") {
+          onCloseMovie();
+        }
+      }
+
+      document.addEventListener("keydown", callback);
+
+      //cleanup function
+      return function () {
+        document.removeEventListener("keydown", callback);
+      };
+    },
+    [onCloseMovie]
+  );
+
   useEffect(
     function () {
       async function GetMovieDetail() {
@@ -76,8 +95,10 @@ function MovieDetails({
       if (!title) return;
       document.title = `Movie | ${title}`;
 
+      //cleanup function
       return function () {
         document.title = "usePopcorn";
+        /* console.log(`clean up effect for movie ${title}`); */
       };
     },
     [title]

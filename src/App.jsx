@@ -36,6 +36,7 @@ function App() {
   function handleDeleteMovie(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbId !== id));
   }
+
   useEffect(
     function () {
       const controller = new AbortController();
@@ -58,8 +59,8 @@ function App() {
           setMovies(data.Search);
           setError("");
         } catch (err) {
-          console.error(err.message);
           if (err.name !== "AbortError") {
+            console.log(err.message);
             setError(err.message);
           }
           setMovies([]);
@@ -72,7 +73,7 @@ function App() {
         setMovies([]);
         return;
       }
-
+      HandleCloseMovie();
       fetchMovie();
       return function () {
         controller.abort();
