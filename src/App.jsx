@@ -15,11 +15,15 @@ import MovieDetails from "./components/Movie/MovieDetail";
 function App() {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
-  const [watched, setWatched] = useState([]);
+  //const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const KEY = useMemo(() => import.meta.env.VITE_APP_KEY, []);
   const [selectedId, setSelectedId] = useState(null);
+  const [watched, setWatched] = useState(function () {
+    const storeWatched = localStorage.getItem("watched");
+    return JSON.parse(storeWatched);
+  });
 
   function HandleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -31,11 +35,22 @@ function App() {
 
   function handleAddMovie(movie) {
     setWatched((watched) => [...watched, movie]);
+
+    //store data in local storage
+    //localStorage.setItem("watched", JSON.stringify([...watched, movie]));
   }
 
   function handleDeleteMovie(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbId !== id));
   }
+
+  //store data with effect
+  useEffect(
+    function () {
+      localStorage.setItem("watched", JSON.stringify(watched));
+    },
+    [watched]
+  );
 
   useEffect(
     function () {

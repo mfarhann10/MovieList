@@ -31,6 +31,8 @@ function MovieDetails({
     Genre: genre,
   } = movie;
 
+  // const [avgRating, setAvgRating] = useState(0);
+
   function HandleAd() {
     const newWatchedMovie = {
       imdbId: selectedId,
@@ -43,6 +45,8 @@ function MovieDetails({
     };
     onAddMovie(newWatchedMovie);
     onCloseMovie();
+    /* setAvgRating(Number(imdbRating));
+    setAvgRating((avgRating) => (avgRating + userRating) / 2); */
   }
 
   //escape in movie detail
@@ -140,7 +144,7 @@ function MovieDetails({
               </div>
             </div>
           </header>
-
+          {/* <p>{avgRating}</p> */}
           {/* Details Section */}
           <section className="p-5">
             {!isWatched ? (
