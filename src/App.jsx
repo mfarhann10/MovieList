@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import Main from "./components/Main";
 import NavBar from "./components/NavBar/NavBar";
 import Search from "./components/NavBar/Search";
@@ -11,17 +11,14 @@ import Loader from "./API/Loader";
 import ErrorMessage from "./API/Error";
 import MovieDetails from "./components/Movie/MovieDetail";
 import { useMovie } from "./Hooks/UseMovie";
+import { useLocalStorageState } from "./Hooks/useLocalStorageState";
 
 function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
   const KEY = useMemo(() => import.meta.env.VITE_APP_KEY, []);
   const { movies, isLoading, error, setError } = useMovie(query);
-
-  const [watched, setWatched] = useState(function () {
-    const storeWatched = localStorage.getItem("watched");
-    return JSON.parse(storeWatched);
-  });
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   function HandleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -41,14 +38,6 @@ function App() {
   function handleDeleteMovie(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbId !== id));
   }
-
-  //store data with effect
-  useEffect(
-    function () {
-      localStorage.setItem("watched", JSON.stringify(watched));
-    },
-    [watched]
-  );
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 p-6">
