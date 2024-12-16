@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import StarRating from "../Star/StarRating";
 import Loader from "../../API/Loader";
+import { useKey } from "../../Hooks/useKey";
 /* eslint-disable react/prop-types */
 function MovieDetails({
   selectedId,
@@ -14,6 +15,7 @@ function MovieDetails({
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
   const countRef = useRef(0);
+  useKey("Escape", onCloseMovie);
 
   useEffect(
     function () {
@@ -57,25 +59,6 @@ function MovieDetails({
     /* setAvgRating(Number(imdbRating));
     setAvgRating((avgRating) => (avgRating + userRating) / 2); */
   }
-
-  //escape in movie detail
-  useEffect(
-    function () {
-      function callback(e) {
-        if (e.code === "Escape") {
-          onCloseMovie();
-        }
-      }
-
-      document.addEventListener("keydown", callback);
-
-      //cleanup function
-      return function () {
-        document.removeEventListener("keydown", callback);
-      };
-    },
-    [onCloseMovie]
-  );
 
   useEffect(
     function () {
